@@ -1,9 +1,9 @@
 package com.altran;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PArrayList<T> {
-
+public class PArrayList<E> {
     private int HEAD = -1;
     private Object arr[];
 
@@ -11,7 +11,7 @@ public class PArrayList<T> {
         arr = new Object[10];
     }
 
-    public void add(T e) {
+    public void add(E e) {
         checkAndIncreaseSize();
         HEAD++;
         arr[HEAD] = e;
@@ -19,39 +19,36 @@ public class PArrayList<T> {
 
     private void checkAndIncreaseSize() {
         if (HEAD == arr.length - 1) {
-            Object[] arr2 = new Object[getNewSize()];
-            for (int i = 0; i < arr.length; i++) {
-                arr2[i] = arr[i];
-            }
-            arr = arr2;
+            //right shift operator which means half of the value 6>>1 means 3
+            int newLength = arr.length + (arr.length >> 1);
+            arr = Arrays.copyOf(arr, newLength);
+            System.out.println(Arrays.toString(arr));
         }
     }
 
-    private int getNewSize() {
-        return ((3 * arr.length) / 2) + 1;
+    public void remove(int pos) throws ArrayIndexOutOfBoundsException {
+        checkInavlidPosition(pos);
+
+        if (HEAD != 0 || HEAD != pos) {
+            System.arraycopy(arr, pos + 1, arr, pos, (arr.length - pos - 1));
+        }
+        arr[HEAD] = null;
+        HEAD--;
     }
 
-    private void checckInvalidPosition(int pos) throws ArrayIndexOutOfBoundsException {
-        if (0 > pos && HEAD != -1 && pos > HEAD) {
+    private void checkInavlidPosition(int pos) {
+        if (pos > HEAD || pos < 0) {
             throw new ArrayIndexOutOfBoundsException(pos);
         }
     }
 
-    public void remove(int pos) {
-        checckInvalidPosition(pos);
-        arr[pos] = null;
-        if (pos != HEAD) {
-            swapData(pos);
-        }
-        HEAD--;
+    public E get(int pos){
+        checkInavlidPosition(pos);
+        return (E) arr[pos];
     }
 
-    public void swapData(int pos) {
-
-        for (int i = pos; i < HEAD; i++) {
-            arr[i] = arr[i + 1];
-        }
-        arr[HEAD] = null;
+    public int getSize() {
+        return HEAD + 1;
     }
 
     @Override

@@ -1,25 +1,26 @@
 package com.altran;
 
-import com.google.gson.Gson;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
+        PArrayList<Integer> pArrayList = new PArrayList<Integer>();
+        for (int i = 0; i < 12; i++) {
+            pArrayList.add(i);
+        }
+        System.out.println(pArrayList.toString());
 
-        PArrayList<Integer> pal = new PArrayList<>();
-        pal.add(1);
-        pal.add(2);
-        pal.add(3);
-        pal.add(4);
-        pal.add(5);
-        pal.add(6);
-        pal.add(7);
-        pal.add(8);
-        pal.add(9);
-        pal.add(10);
-        System.out.println(pal.toString());
-        pal.remove(9);
-        System.out.println(pal.toString());
+        // pArrayList.remove(5);
+        // System.out.println(pArrayList.toString());
+
+        pArrayList.remove(-2);
+
+        for (int i = 0; i < 12; i++) {
+
+            pArrayList.remove(pArrayList.getSize() - 1);
+            System.out.println(pArrayList.toString());
+        }
     }
 }
