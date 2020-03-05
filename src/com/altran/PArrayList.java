@@ -8,13 +8,33 @@ public class PArrayList<E> {
     private Object arr[];
 
     public PArrayList() {
-        arr = new Object[10];
+        this(10);
+    }
+
+    public PArrayList(int capacity) {
+        arr = new Object[capacity];
+    }
+
+    public PArrayList(PArrayList<? extends E> list) {
+        arr = new Object[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            arr[i] = list.get(i);
+        }
+        HEAD = list.size() - 1;
     }
 
     public void add(E e) {
         checkAndIncreaseSize();
         HEAD++;
         arr[HEAD] = e;
+    }
+
+    void add(int index, E element) {
+        checkAndIncreaseSize();
+        System.arraycopy(arr, index, arr, index + 1, HEAD - index + 1);
+        arr[index] = element;
+        HEAD++;
+
     }
 
     private void checkAndIncreaseSize() {
@@ -42,12 +62,12 @@ public class PArrayList<E> {
         }
     }
 
-    public E get(int pos){
+    public E get(int pos) {
         checkInavlidPosition(pos);
         return (E) arr[pos];
     }
 
-    public int getSize() {
+    public int size() {
         return HEAD + 1;
     }
 
