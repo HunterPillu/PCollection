@@ -1,14 +1,15 @@
 package com.altran;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class PArrayList<E> {
+public class PArrayList<E> implements Iterable<E> {
     private int HEAD = -1;
     private Object arr[];
+    private static final int DEFAULT_SIZE = 10;
 
     public PArrayList() {
-        this(10);
+        this(DEFAULT_SIZE);
     }
 
     public PArrayList(int capacity) {
@@ -16,8 +17,9 @@ public class PArrayList<E> {
     }
 
     public PArrayList(PArrayList<? extends E> list) {
-        arr = new Object[list.size()];
+        arr = new Object[DEFAULT_SIZE];
         for (int i = 0; i < list.size(); i++) {
+            checkAndIncreaseSize();
             arr[i] = list.get(i);
         }
         HEAD = list.size() - 1;
@@ -27,6 +29,19 @@ public class PArrayList<E> {
         checkAndIncreaseSize();
         HEAD++;
         arr[HEAD] = e;
+    }
+
+    public void addAll(Iterable<? extends E> e) {
+        checkAndIncreaseSize();
+        HEAD++;
+        arr[HEAD] = e;
+        Iterator<? extends E> iterator = e.iterator();
+
+        while (iterator.hasNext()) {
+            toString();
+            add(iterator.next());
+
+        }
     }
 
     void add(int index, E element) {
@@ -42,7 +57,6 @@ public class PArrayList<E> {
             //right shift operator which means half of the value 6>>1 means 3
             int newLength = arr.length + (arr.length >> 1);
             arr = Arrays.copyOf(arr, newLength);
-            System.out.println(Arrays.toString(arr));
         }
     }
 
@@ -71,11 +85,39 @@ public class PArrayList<E> {
         return HEAD + 1;
     }
 
+    public boolean isEmpty() {
+        return size() > 0;
+    }
+
     @Override
     public String toString() {
         return "PArrayList{" +
                 "HEAD=" + HEAD +
                 ", arr=" + Arrays.toString(arr) +
                 '}';
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new ListIterator<>();
+    }
+
+    class ListIterator<E> implements Iterator<E> {
+        int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index != PArrayList.this.size();
+        }
+
+        @Override
+        public E next() {
+            return (E) PArrayList.this.get(index++);
+        }
+
+        @Override
+        public void remove() {
+
+        }
     }
 }
