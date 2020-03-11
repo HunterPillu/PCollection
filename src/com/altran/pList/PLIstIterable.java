@@ -1,28 +1,25 @@
 package com.altran.pList;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
-public class PLIstIterable<E> implements Iterable<E> {
-    @Override
-    public Iterator<E> iterator() {
-        return new PLIstIterable.ListIterator();
-    }
+public interface PListIterator<E> extends Iterator<E> {
+    boolean hasNext();
 
-    class ListIterator<E> implements Iterator<E> {
+    E next();
 
-        @Override
-        public boolean hasNext() {
-            return false;
-        }
+    void remove();
 
-        @Override
-        public E next() {
-            return null;
-        }
+    boolean hasPrevious();
 
-        @Override
-        public void remove() {
+    E previous();
 
-        }
-    }
+    int nextIndex();
+
+    int previousIndex();
+
+    void set(E var1);
+
+    void add(E var1);
+
 }
