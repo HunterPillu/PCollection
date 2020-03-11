@@ -3,7 +3,9 @@ package com.altran.pList;
 import com.altran.PCollection;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 
 public class PLinkedList<E> implements PList<E> {
@@ -32,7 +34,7 @@ public class PLinkedList<E> implements PList<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return listIterator();
     }
 
     @Override
@@ -47,7 +49,34 @@ public class PLinkedList<E> implements PList<E> {
 
     @Override
     public boolean add(E var1) {
-        return false;
+        if (null != first) {
+            getLastNode().next = new PLinkedList.Node<E>(var1);
+        } else {
+            first = new PLinkedList.Node<E>(var1);
+        }
+        return true;
+    }
+
+    public E getFirst() {
+        if (null != first) {
+            return first.item;
+        } else return null;
+    }
+
+    public Node<E> getFirstNode() {
+        if (null != first) {
+            return first;
+        } else return null;
+    }
+
+    public Node<E> getLastNode() {
+        Node<E> item = getFirstNode();
+        if (null != item) {
+            while (item.next != null) {
+                item = item.next;
+            }
+        }
+        return item;
     }
 
     @Override
@@ -117,12 +146,12 @@ public class PLinkedList<E> implements PList<E> {
 
     @Override
     public PListIterator<E> listIterator() {
-        return new ListItr<>();
+        return new ListItr();
     }
 
     @Override
     public PListIterator<E> listIterator(int var1) {
-        return new ListItr<E>();
+        return new ListItr();
     }
 
     @Override
@@ -130,7 +159,7 @@ public class PLinkedList<E> implements PList<E> {
         return null;
     }
 
-    class ListItr<E> implements PListIterator<E> {
+    class ListItr implements PListIterator<E> {
         int index;
         PLinkedList.Node<E> lastReturned;
         PLinkedList.Node<E> next;
@@ -144,12 +173,14 @@ public class PLinkedList<E> implements PList<E> {
         @Override
         public boolean hasNext() {
             //return index != PLinkedList.this.size();
-            return null != PLinkedList.this.Node
+            return null != next;
         }
 
         @Override
         public E next() {
-            return (E) PLinkedList.this.get(index++);
+            lastReturned = next;
+            next = next.next;
+            return (E) lastReturned.item;
         }
 
         @Override
@@ -190,12 +221,33 @@ public class PLinkedList<E> implements PList<E> {
 
 
     public static class Node<E> {
-        E e;
+        E item;
         PLinkedList.Node<E> next;
 
         public Node(E e, Node<E> next) {
-            this.e = e;
+            this.item = e;
             this.next = next;
         }
+
+        public Node(E e) {
+            this.item = e;
+            this.next = null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "e=" + item +
+                    ", next=" + next +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "PLinkedList{" +
+                "size=" + size +
+                ", first=" + first.toString() +
+                '}';
     }
 }

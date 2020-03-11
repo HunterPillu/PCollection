@@ -1,55 +1,34 @@
 package com.altran;
 
+import com.altran.pList.ArrayListImpl;
+import com.altran.pList.LinkedListImpl;
 import com.altran.pList.PArrayList;
+
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        PArrayList<Integer> pArrayList = new PArrayList<Integer>();
-        for (int i = 0; i < 12; i++) {
-            pArrayList.add(i);
+        new ArrayListImpl().main();
+        new LinkedListImpl().main();
+
+        /*LinkedList<Integer> pl = new LinkedList<>();
+        pl.add(1);
+        pl.add(2);
+        pl.add(3);
+        pl.add(4);
+        pl.add(5);
+        pl.add(6);
+
+        Iterator<Integer> itr = pl.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
         }
-        System.out.println(pArrayList.toString());
 
-        // pArrayList.remove(5);
-        // System.out.println(pArrayList.toString());
-
-        //pArrayList.remove(-2);
-
-        for (int i = 0; i < 12; i++) {
-
-            pArrayList.remove(pArrayList.size() - 1);
-
-        }
-        System.out.println(pArrayList.toString());
-        PArrayList<User> al = new PArrayList<>(10);
-        al.add(new User("asdf", 45));
-        al.add(new User("asdf", 47));
-        //System.out.println(al.toString());
-
-        User u = new User("asdfae", 48);
-
-        al.add(0, new User("asdfae", 46));
-        //System.out.println(al.toString());
-
-        al.add(2, u);
-        //System.out.println(al.toString());
-
-        al.add(3, new User("asdfae", 48));
-        //System.out.println(al.toString());
-
-        PArrayList<User> al2 = new PArrayList<>(al);
-        PArrayList<User> al3 = new PArrayList<>();
-        //al2.addAll(al);
-        al2.add(new User("asdfae", 148));
-        System.out.println(al2.toString());
-        System.out.println("--------------");
-        System.out.println(al2.contains(al.get(2)));
-        System.out.println("--------------");
-
-        System.out.println(al.containsAll(al2));
-        System.out.println(al2.removeAll(al3));
-        System.out.println(al2.toString());
+        for (Integer node : pl) {
+            System.out.println(node);
+        }*/
     }
 }
