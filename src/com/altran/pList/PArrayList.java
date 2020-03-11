@@ -130,12 +130,12 @@ public class PArrayList<E> implements PList<E>, Cloneable, Serializable {
     }
 
     @Override
-    public java.util.ListIterator<E> listIterator() {
+    public PListIterator<E> listIterator() {
         return null;
     }
 
     @Override
-    public java.util.ListIterator<E> listIterator(int var1) {
+    public PListIterator<E> listIterator(int var1) {
         return null;
     }
 
@@ -186,9 +186,14 @@ public class PArrayList<E> implements PList<E>, Cloneable, Serializable {
         return false;
     }
 
+
+    public PListIterator<E> ListIterator() {
+        return new ListItr<E>();
+    }
+
     @Override
     public Iterator<E> iterator() {
-        return new ListIterator<>();
+        return new PArrayList<E>.Itr<>();
     }
 
     @Override
@@ -201,7 +206,40 @@ public class PArrayList<E> implements PList<E>, Cloneable, Serializable {
         return null;
     }
 
-    class ListIterator<E> implements Iterator<E> {
+    class ListItr<T> extends PArrayList<T>.Itr<T> implements PListIterator<T> {
+
+        @Override
+        public boolean hasPrevious() {
+            return false;
+        }
+
+        @Override
+        public T previous() {
+            return null;
+        }
+
+        @Override
+        public int nextIndex() {
+            return 0;
+        }
+
+        @Override
+        public int previousIndex() {
+            return 0;
+        }
+
+        @Override
+        public void set(T var1) {
+
+        }
+
+        @Override
+        public void add(T var1) {
+
+        }
+    }
+
+    class Itr<E> implements Iterator<E> {
         int index = 0;
 
         @Override
