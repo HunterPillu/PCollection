@@ -34,7 +34,7 @@ public interface PList<E> extends PCollection<E>  {
 
     default void replaceAll(UnaryOperator<E> operator) {
         Objects.requireNonNull(operator);
-        ListIterator<E> li = this.listIterator();
+        PListIterator<E> li = this.listIterator();
 
         while(li.hasNext()) {
             li.set(operator.apply(li.next()));
@@ -45,7 +45,7 @@ public interface PList<E> extends PCollection<E>  {
     default void sort(Comparator<? super E> c) {
         E[] a = this.toArray();
         Arrays.sort(a, c);
-        ListIterator<E> i = this.listIterator();
+        PListIterator<E> i = this.listIterator();
         E[] var4 = a;
         int var5 = a.length;
 
@@ -75,9 +75,9 @@ public interface PList<E> extends PCollection<E>  {
 
     int lastIndexOf(Object var1);
 
-    ListIterator<E> listIterator();
+    PListIterator<E> listIterator();
 
-    ListIterator<E> listIterator(int var1);
+    PListIterator<E> listIterator(int var1);
 
     PList<E> subList(int var1, int var2);
 }
